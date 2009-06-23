@@ -20,6 +20,7 @@
 
 ;;; Node is either (DATA) (for leaf nodes) or an improper list (DATA LEFT . RIGHT)
 
+(proclaim '(function build-btree (fixnum fixnum)))
 (defun build-btree (item depth)
   (declare (fixnum item depth))
   (if (zerop depth) (list item)
@@ -30,6 +31,7 @@
               (cons (build-btree (the fixnum (1- item2)) depth-1)
                     (build-btree item2 depth-1))))))
 
+(proclaim '(function check-node))
 (defun check-node (node)
   (declare (values fixnum))
   (let ((data (car node))
@@ -40,8 +42,9 @@
            (check-node (cdr kids)))
         data)))
 
+(proclaim '(function loop-depths (fixnum  fixnum) fixnum))
 (defun loop-depths (max-depth &key (min-depth 4))
-  (declare (type fixnum max-depth min-depth))
+  ;;(declare (type fixnum max-depth min-depth))
   (loop for d of-type fixnum from min-depth by 2 upto max-depth do
        (loop with iterations of-type fixnum = (ash 1 (+ max-depth min-depth (- d)))
           for i of-type fixnum from 1 upto iterations
@@ -49,7 +52,7 @@
                  (the fixnum (check-node (build-btree (- i) d))))
           into result of-type fixnum
           finally
-            (format t "~D trees of depth ~D check: ~D~%"
+            (format t "~7D trees of depth ~D check: ~D~%"
                     (the fixnum (+ iterations iterations )) d result))))
 
 (defun main (&optional (n (parse-integer
