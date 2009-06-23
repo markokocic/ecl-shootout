@@ -1,0 +1,8 @@
+The aim of this project is to include enough benchmarks to include ECL in Computer Language Benchmark Game in http://shootout.alioth.debian.org.
+
+
+Compile file with:
+	./compile.sh filename_without_extension
+Run file with:
+	time ./file args
+
