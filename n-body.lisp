@@ -65,7 +65,8 @@
 (defparameter *sun*
   (make-body 0.0d0 0.0d0 0.0d0 0.0d0 0.0d0 0.0d0 +solar-mass+))
 
-(declaim (inline applyforces))
+;;(declaim (inline applyforces))
+(proclaim '(function applyforces (body body double-float) nil))
 (defun applyforces (a b dt)
   (declare (type body a b) (type double-float dt))
   (let* ((dx (- (x a) (x b)))
