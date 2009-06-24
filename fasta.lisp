@@ -69,8 +69,9 @@
       (incf cp (freq-p (aref freqs i)))
       (setf (freq-p (aref freqs i)) cp))))
 
-
+(proclaim '(function select-random (simple-vector fixnum)))
 (defun select-random (freqs len)
+  (declare (optimize (speed 3)(debug 0)(space 0)))
   (declare (fixnum len) (simple-vector freqs))
   (let ((r (gen_random 1.0d0)))
     (declare (double-float r))
@@ -80,7 +81,10 @@
     (freq-c (aref freqs (1- len)))))
 
 (defconstant BUFFER_SIZE 30000)
+
+(proclaim '(function make-random-fasta (base-string base-string simple-vector fixnum fixnum fixnum)))
 (defun make-random-fasta (id desc freqs freqs-length n line-length)
+  (declare (optimize (speed 3)(debug 0)(space 0)))
   (declare (fixnum freqs-length n line-length))
   (let ((buf (make-string BUFFER_SIZE :element-type 'base-char :initial-element #\Space))
         (index 0))
@@ -103,10 +107,11 @@
     (when (> index 0)
       (write-sequence buf *standard-output* :end index))))
 
-
+(proclaim '(function make-repeat-fasta (base-string base-string t fixnum fixnum)))
 (defun make-repeat-fasta (id desc s n line-length)
   (declare (fixnum n line-length))
-  (let ((s-start 0)               ; this won't change
+  (declare (optimize (speed 3)(debug 0)(space 0)))
+    (let ((s-start 0)               ; this won't change
         (s-end (length s))        ; this won't change
         (w-start 0)               ; this will cycle around
         (w-end 0)                 ; this will cycle around
