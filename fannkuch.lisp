@@ -17,7 +17,7 @@
         (flips 0) (flipsmax 0) (r n) (check 0) (k 0)
 	(i 0) (perm0 0))
 
-    (declare ;((simple-array integer32 10) perm perm1 count)
+    (declare (type (simple-array fixnum (*)) perm perm1 count)
      (fixnum flips flipsmax check k r i perm0))
     
     (dotimes (i n) (setf (aref perm1 i) i))
