@@ -7,8 +7,9 @@
 	(princ (1+ i)))
   (terpri))
 
+(proclaim '(function fannkuch (fixnum) fixnum))
 (defun fannkuch (n)
-  (declare (optimize (speed 3) (safety 2) (debug 0)))
+  (declare (optimize (speed 3) (safety 0) (debug 0) (space 0)))
   ;;(assert (< 1 n 128))
   (let ((perm (make-array n :element-type 'fixnum))
         (perm1 (make-array n :element-type 'fixnum))
@@ -16,9 +17,9 @@
         (flips 0) (flipsmax 0) (r n) (check 0) (k 0)
 	(i 0) (perm0 0))
 
-    (declare ((simple-array fixnum (*)) perm perm1 count)
-             (fixnum flips flipsmax check k r i perm0))
-
+    (declare ;((simple-array integer32 10) perm perm1 count)
+     (fixnum flips flipsmax check k r i perm0))
+    
     (dotimes (i n) (setf (aref perm1 i) i))
 
     (loop
@@ -63,4 +64,4 @@
                                          #+ecl  (si::command-args))) "1"))))
     (format t "Pfannkuchen(~D) = ~D~%" n (fannkuch n))))
 
-(main 20)
+(main)
