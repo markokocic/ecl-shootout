@@ -30,6 +30,7 @@
      (declare (type (integer 0 22000) n n+1))
      (/ (float (+ (ash (* n n+1) -1) ,i 1) 0d0))))
 
+(proclaim '(function eval-At-times-u (simple-array fixnum simple-array fixnum fixnum) double-float))
 (defun eval-At-times-u (u n Au start end)
   (declare (type fixnum n start end)
            (type (simple-array double-float) u Au))
@@ -39,6 +40,7 @@
                     summing (* (aref u j) (eval-A j i))
                     of-type double-float))))
 
+(proclaim '(function eval-A-times-u (simple-array fixnum simple-array fixnum fixnum) double-float))
 (defun eval-A-times-u (u n Au start end)
   (declare (type fixnum n start end)
            (type (simple-array double-float) u Au))
@@ -61,8 +63,9 @@
           into threads
           finally (mapcar #'sb-thread:join-thread threads))))
 
+(proclaim '(function execute-parallel (fixnum fixnum function)))
 #-sb-thread
-(defun execute-parallel (start end function )
+(defun execute-parallel (start end function)
   (funcall function start end))
 
 (defun eval-AtA-times-u (u AtAu v n start end)
