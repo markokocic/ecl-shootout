@@ -15,6 +15,8 @@
 ;;;     an array to make the nested iterations over it less clumsy, use
 ;;;     INCF/DECF where appropriate, break very long lines, etc)
 
+(declaim (optimize (speed 3) (safety 0) (debug 0)))
+
 (defconstant +days-per-year+ 365.24d0)
 (defconstant +solar-mass+ (* 4d0 pi pi))
 
